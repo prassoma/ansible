@@ -1,0 +1,48 @@
+---
+- name: Update splunk HF/UF syslog configuration
+  hosts: splunk
+
+  tasks:
+  - name: Take the backup of existing configuration in {{ inventory_hostname }}
+    shell:
+      cmd: tar -cf /root/LINUX-INFO/etc_syslog_$(date +%F).tar /etc/rsyslog.d /etc/rsyslog.conf
+
+  - name: Veirfy the existance of the backup file in {{ inventory_hostname }}
+    shell:
+      cmd: ls -ld /root/LINUX-INFO/etc_syslog_$(date +%F).tar
+    register: result
+
+  - debug: 
+      var: result.stdout_lines
+
+  - name: Delete the existing syslog configuration files in {{ inventory_hostname }}
+    shell:
+      cmd: find /etc/rsyslog.d/ -delete
+
+  - name: Copy new config files into {{ inventory_hostname }}
+    copy: 
+      src: /opt/ansible/files/splunk/etc/rsyslog.d/*.conf
+      dest: /etc/rsyslog.d/
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Copy updated rsyslog.conf file to  {{ inventory_hostname }}
+    copy: 
+      src: /opt/ansible/files/splunk/etc/rsyslog.conf
+      dest: /etc/rsyslog.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+    - Restart rsyslogd
+
+  handlers:
+  - name: Restart rsyslogd
+    service: 
+      name: rsyslog
+      state: restarted
+
+
+
+

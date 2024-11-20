@@ -1,0 +1,9 @@
+---
+- name: Change file permissions on managed nodes
+  hosts: all
+
+  tasks: 
+  - name: Change permissions of '/root/file_from_orakvm'
+    file:
+      path: /root/file_from_orakvm
+      mode: a+rwx

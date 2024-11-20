@@ -1,0 +1,9 @@
+---
+# Tasks to be performed on new installation servers.
+- name: New Server installation tasks.
+  hosts: all
+  roles:
+  - motd
+  - ntp
+  - packages
+  - sudoers

@@ -1,0 +1,10 @@
+---
+- name: Multi task play Book
+  hosts: localhost
+
+  tasks:
+  - name: ping localhost
+    ping:
+
+  - name: Print Hello World
+    debug: msg="Hello World!"

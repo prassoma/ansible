@@ -1,0 +1,37 @@
+---
+# tasks file for sudoers
+- name: Deploy user templates.
+  copy:
+    src: "{{ item }}"
+    dest: /etc/sudoers.d
+    mode: 0440
+    owner: root
+    group: root
+    backup: true
+#  loop:
+#   - sysadm
+  with_items: "{{ user_templates }}"
+  notify:
+    - Check_sudo_integrity
+    - Display_command_output
+
+- name: Deploy sudoers templates.
+  copy:
+    src: sudoers
+    dest: /etc/sudoers
+    mode: 0440
+    owner: root
+    group: root
+    backup: true
+  notify:
+    - Check_sudo_integrity
+    - Display_command_output
+
+#- name: verify file permissions
+# file:
+#    path: /etc/sudoers.d/{{ item }}
+#    mode: 0440
+#  with_items: "{{ ext_templates }}"
+#  notify:
+#    - Check_sudo_integrity
+#    - Display_command_output  

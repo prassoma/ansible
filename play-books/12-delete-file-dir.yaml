@@ -1,0 +1,26 @@
+---
+- name: Delete files and directories
+  hosts: all
+
+  tasks:
+  - name: Delete '/root/ansible-test' directory and it's contents.
+    file:
+      path: /root/ansible-test
+      state: absent
+
+  - name: Get the state of the deleted directory '/root/ansible-test'
+    stat:
+      path: /root/ansible-test
+    register: fs
+
+  - name: Print the status of the deleted directory '/root/ansible-test'
+    debug:
+      msg: status of the directory {{ fs }}
+
+
+
+
+
+
+
+

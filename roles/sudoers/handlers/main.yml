@@ -1,0 +1,10 @@
+---
+# handlers file for sudoers
+- name: Check_sudo_integrity
+  shell: 
+   cmd: visudo -c
+  register: visudo_out
+
+- name: Display_command_output
+  debug:
+    msg: "{{ visudo_out.stdout }}"

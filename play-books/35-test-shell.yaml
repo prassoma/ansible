@@ -1,0 +1,13 @@
+---
+- name: Test shell module
+  hosts: rhel8oravm01.example.com
+
+  tasks:
+  - name: "Check sudo integrity"
+    shell:
+      cmd: visudo -c
+    register: visudo_out
+
+  - name: " Display command output" 
+    debug:
+      msg: "{{ visudo_out.stdout }}"

@@ -1,0 +1,30 @@
+---
+# tasks file for packages
+- name: Install mandatory packages.
+  yum:
+    name: '{{ packages }}'
+    state: present
+#  with_items: '{{ packages }}' # For yum we can directly provide the variable. No neeed to loop.
+  tags:
+  - mandatory_packages
+  - new_installation
+
+- name: Install packages specific to RHEL 8
+  yum:
+    name: '{{ rhel8_pkg }}'
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "8"
+  tags:
+  - mandatory_packages
+  - mandatory_packages_rhel8
+  - new_installation
+
+- name: Install packages specific to RHEL 7
+  yum:
+    name: '{{ rhel7_pkg }}'
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "7"
+  tags:
+  - mandatory_packages
+  - mandatory_packages_rhel7
+  - new_installation

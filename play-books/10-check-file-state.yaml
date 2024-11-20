@@ -1,0 +1,14 @@
+---
+- name: Check and print the status of a file.
+  #hosts: localhost
+  hosts: all
+
+  tasks:
+  - name: Check status of the file '/etc/hosts'
+    stat:
+      path: /etc/hosts
+    register: fs
+
+  - name: print results of file state check.
+    debug:
+      msg: File attributes {{ fs }}

@@ -1,0 +1,4 @@
+## Managed by Ansible.
+## Manual changes will be lost during next refresh
+## Version: 20240524
+%suadm	ALL=(ALL)	NOPASSWD: ALL

@@ -1,0 +1,30 @@
+---
+- name: create a directory and file inside in it.
+  hosts: all
+
+  tasks:
+  - name: Create a directory '/root/ansible-test'
+    file:
+      path: /root/ansible-test
+      state: directory
+      owner: sysadm
+      group: wheel
+      mode: 0770
+
+  - name: Create a file 'my-file' under the directory '/root/ansible-test'
+    file:
+      path: /root/ansible-test/my-file
+      #state: file -> If we use state: file, then it will just check the existence of the file, will not create any file. For that we need to use the attribute 'touch'
+      state: touch
+      owner: sysadm
+      group: root
+      mode: 0644
+
+  - name: Get the status of the file created.
+    stat:
+      path: /root/ansible-test/my-file
+    register: fs
+
+  - name: print the status of the file state.
+    debug:
+      msg: file attributes {{ fs }}

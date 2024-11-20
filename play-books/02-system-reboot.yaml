@@ -1,0 +1,16 @@
+---
+- name: Reboot Linux Servers
+  hosts: all
+
+  tasks: 
+  - name: Rebooting the host
+    reboot: 
+      reboot_timeout: 90
+
+  - name: Geting server uptime
+    shell:
+      cmd: uptime
+    register: srv_uptime
+
+  - name: Display the server uptime
+    debug: msg="{{ srv_uptime.stdout_lines }}"

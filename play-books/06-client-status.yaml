@@ -1,0 +1,7 @@
+---
+- name: Check ansible managed hosts connectivity status
+  hosts: all
+
+  tasks:
+  - name: Test connectivity using ansible ping module
+    ping:

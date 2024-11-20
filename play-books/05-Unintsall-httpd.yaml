@@ -1,0 +1,14 @@
+---
+- name: Remove Apache HTTPD server
+  hosts: all
+
+  tasks:
+  - name: Stop Apache HTTPD service
+    service: 
+      name: httpd
+      state: stopped
+
+  - name: Remove Apache HTTPD packages
+    yum:
+      name: httpd
+      state: absent 

@@ -1,0 +1,27 @@
+---
+- name: Create a file and add text to it.
+  hosts: all
+
+  tasks: 
+  - name: create a file called /tmp/ansible-created.txt
+    file:
+      path: /tmp/ansible-created.txt
+      state: touch
+      mode: 0644
+      owner: sysadm
+      group: sysadm
+
+  - name: add some text into it.
+    blockinfile:
+      path: /tmp/ansible-created.txt
+      block: |
+            # This file is created by ansible.
+            # This is managed by ansible.
+            # Manual editions will be lost.
+            127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+            ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+            192.168.56.13   orakvm.example.com              orakvm
+            192.168.56.14   rhel7oravm01.example.com        rhel7oravm01
+            192.168.56.15   rhel6oravm01.example.com        rhel6oravm01
+            192.168.56.16   rhel9oravm01.example.com        rhel9oravm01
+            192.168.56.17   rhel8oravm01.example.com        rhel8oravm01

@@ -1,0 +1,62 @@
+---
+- name: Update splunk HF/UF syslog configuration
+  hosts: splunk
+  vars:
+    files: [/opt/ansible/files/splunk/etc/rsyslog.d/listen.conf,/opt/ansible/files/splunk/etc/rsyslog.d/splunk_syslog_tcp.conf,/opt/ansible/files/splunk/etc/rsyslog.d/splunk_syslog_udp.conf]
+
+  tasks:
+  - name: Take the backup of existing configuration in {{ inventory_hostname }}
+    archive:
+      path: 
+      - /etc/rsyslog.d/*
+      - /etc/rsyslog.conf
+      dest: /root/LINUX-INFO/etc_syslog_backup.tar.gz
+      format: gz
+
+  - name: Veirfy the existance of the backup file in {{ inventory_hostname }}
+    shell:
+      cmd: ls -ld /root/LINUX-INFO/etc_syslog_backup.tar.gz
+    register: result
+
+  - debug: 
+      var: result.stdout_lines
+
+  - name: Delete the existing syslog configuration files in {{ inventory_hostname }}
+    shell:
+      cmd: find /etc/rsyslog.d/ -delete
+
+  - name: Create /etc/rsyslog.d directory
+    file: 
+      path: /etc/rsyslog.d/
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
+
+  - name: Copy new config files into {{ inventory_hostname }}
+    copy: 
+      src: "{{item}}"
+      dest: /etc/rsyslog.d/
+      owner: root
+      group: root
+      mode: 0644
+    loop:
+      - /opt/ansible/files/splunk/etc/rsyslog.d/listen.conf
+      - /opt/ansible/files/splunk/etc/rsyslog.d/splunk_syslog_tcp.conf
+      - /opt/ansible/files/splunk/etc/rsyslog.d/splunk_syslog_udp.conf
+
+  - name: Copy updated rsyslog.conf file to  {{ inventory_hostname }}
+    copy: 
+      src: /opt/ansible/files/splunk/etc/rsyslog.conf
+      dest: /etc/rsyslog.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+    - Restart rsyslogd
+
+  handlers:
+  - name: Restart rsyslogd
+    service: 
+      name: rsyslog
+      state: restarted

@@ -1,0 +1,21 @@
+---
+- name: Download Tomcat from tomcat.apache.org
+  hosts: all
+  
+  tasks: 
+  - name: Create a directory /opt/tomcat
+    file: 
+      path: /opt/tomcat
+      state: directory
+      mode: 0755
+      owner: root
+      group: sysadm
+
+  - name: Download Tomcat using get_url module
+    get_url: 
+      url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz
+      validate_certs: no # without this attribute, getting failed in rhel 7 boxes with "msg": "Request failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:618)>"
+      dest: /opt/tomcat
+      mode: 0644
+      owner: sysadm
+      group: root

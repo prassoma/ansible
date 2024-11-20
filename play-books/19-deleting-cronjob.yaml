@@ -1,0 +1,17 @@
+# This job is to delete the manual cron job entry added in root's crontab
+# Cron job is 'rpm -q kernel > /tmp/kernel-info.log 2>&1'
+---
+- name: Delete manual cron entry using Ansible.
+  hosts: all
+
+  tasks:
+  - name: " Remove kernel information cronjob"
+    shell:
+      "crontab -l -u root|grep -v rpm |crontab -u root -"
+    register: cronout
+  
+  - debug: msg="{{ cronout.stdout_lines }}"
+
+## Explanation:- You have to just replace "mybot" string on line 8 with your unique identity of crontab entry. that's it. \
+# for "how to delete multiple crontab entries by ansible" you can use multiple strings in grep as shown below
+# "crontab -l -u root |grep -v 'strin1\|string2\|string3\|string4'  |crontab -u root -"

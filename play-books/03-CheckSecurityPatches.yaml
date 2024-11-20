@@ -1,0 +1,16 @@
+---
+- name: Check Security updates only
+  hosts: sgp3vpnlp00001.vpn.cdom
+
+  tasks:
+  - name: list available security patches.
+    yum:
+      security: yes
+      state: latest
+    check_mode: yes
+    register: yum_output
+#    become: true
+
+  - name: show that yum output
+    debug:
+      msg: "{{ yum_output }}"

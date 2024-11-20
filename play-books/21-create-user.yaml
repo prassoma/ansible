@@ -1,0 +1,11 @@
+---
+- name: Create user in Linux environment
+  hosts: all
+
+  tasks:
+  - name: Create a user named john
+    user:
+      name: john
+      shell: /bin/bash
+      comment: "Managed by Ansible, Operator"
+      uid: 1100

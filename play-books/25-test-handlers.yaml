@@ -1,0 +1,5 @@
+---
+- name: Enable httpd service on firewalld
+  hosts: localhost
+
+  tasks:

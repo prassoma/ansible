@@ -1,0 +1,25 @@
+---
+# tasks file for ntp
+- name: Install and configure NTP service
+  yum:
+    name: ntp
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "7"
+  notify: 
+  - start NTP service
+  tags:
+  - ntp_service
+  - ntp_service_rhel7
+  - new_installation
+
+- name: Install and configure chrony service
+  yum:
+    name: chrony
+    state: present
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "8"
+  notify: 
+  - start Chrony service
+  tags:
+  - ntp_service
+  - ntp_service_rhel8
+  - new_installation  

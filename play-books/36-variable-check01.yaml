@@ -1,0 +1,12 @@
+---
+- name: Storing command output in a variable
+  hosts: localhost
+
+  tasks:
+  - name: Collect the content of /etc/hosts from {{ inventory_hostname }}
+    shell:
+      cmd: cat /etc/hosts
+    register: result
+
+  - debug:
+      var: result.stdout_lines

@@ -1,0 +1,13 @@
+---
+# vars file for packages
+packages:
+  - vim
+  - redhat-lsb-core
+  - sysstat
+rhel8_pkg:
+  - ntpstat
+  - chrony
+rhel7_pkg:
+  - ntp
+  - ntpdate
+  - screen

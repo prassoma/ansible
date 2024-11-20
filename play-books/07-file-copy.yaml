@@ -1,0 +1,13 @@
+---
+- name: Copy file to ansible managed nodes
+  hosts: rhel8oravm01.example.com
+
+  tasks:
+  - name: Copy CIS L1 remediation script to rhel8 servers
+    #become: true
+    copy:
+      src: /home/sysadm/ansible/scripts/remediation.sh
+      dest: /root/
+      owner: root
+      group: root
+      mode: 0744

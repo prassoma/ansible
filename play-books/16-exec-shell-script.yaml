@@ -1,0 +1,13 @@
+---
+- name: Execute a shell script on remote hosts
+  hosts: all
+
+  tasks:
+  - name: Copy shell script 'create-file.sh' to remote hosts
+    copy:
+      src: /home/sysadm/ansible/scripts/create-file.sh
+      dest: /home/sysadm
+      mode: a+x
+      
+  - name: Execute script 'create-file.sh'
+    shell: /home/sysadm/create-file.sh

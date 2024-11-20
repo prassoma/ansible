@@ -1,0 +1,49 @@
+---
+- name: schedule cron job
+  hosts: all
+
+  tasks:
+  - name: copy cron job file
+    copy:
+      src: /home/sysadm/ansible/scripts/clean-yum-cache.sh
+      dest: /home/sysadm
+      mode: a+x
+
+  - name: schedule the cron job
+    cron:
+      name: "Clean YUM cache on daily basis"
+      minute: "0"
+      hour: "05"
+      day: "*"
+      month: "*"
+      weekday: "*"
+      user: "root"
+      job: "/home/sysadm/clean-yum-cache.sh >/dev/null 2>&1"
+
+  - name: schedule cronjob for fileystem utilization
+    cron:
+      name: "Collect Filesystem utilization on Weekly basis"
+      minute: "15"
+      hour: "07"
+      day: "*"
+      month: "*"
+      weekday: "5"
+      user: "root"
+      job: "df -hPT > /tmp/df-cron.log 2>&1"
+      
+  - name: schedule cronjob for logical volume utilization
+    cron:
+      name: Collect LVM data on daily basis
+      backup: yes
+      minute: "30"
+      hour: "01"
+      day: "*"
+      month: "*"
+      weekday: "*"
+      user: "root"
+      job: "lvs > /tmp/lvs-cron.log 2>&1"
+    register: backup_file
+    
+  - name: Print cron backup file name
+    debug:
+      msg: Cron backed up to {{ backup_file }}

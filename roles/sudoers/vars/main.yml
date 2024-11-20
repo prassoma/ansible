@@ -1,0 +1,9 @@
+---
+# vars file for sudoers
+user_templates:
+  - sysadm
+  - suadm
+#ext_templates:
+#  - BSR-pe-splunk
+#  - sysadm
+#  - suadm

@@ -1,0 +1,5 @@
+---
+- name: New installation server tasks
+  hosts: all
+  roles:
+  - motd

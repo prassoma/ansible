@@ -1,0 +1,15 @@
+---
+- name: Update packages
+  hosts: rhel8oravm01.example.com
+
+  tasks:
+  - name: update packages
+    yum: 
+      name: "{{ item }}"
+      state: latest
+    register: yum_update
+    loop:
+      - pam
+      - authselect
+  - debug: msg="{{ yum_update }}"
+

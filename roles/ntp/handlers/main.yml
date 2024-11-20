@@ -1,0 +1,13 @@
+---
+# handlers file for ntp
+- name: start NTP service
+  service:
+    name: ntpd
+    state: restarted
+    enabled: true
+
+- name: start Chrony service
+  service: 
+    name: chronyd
+    state: restarted
+    enabled: true

@@ -1,0 +1,25 @@
+---
+- name: get remote file
+  hosts: sgu2psplu00001.psp.cdom
+
+  tasks:
+  # below example, a directory structure will be created under /opt/data same as source.
+  # File will copied to /opt/data/{{ inventory_hostname }}/etc/
+  - name: Store file into /opt/data/{{ inventory_hostname }}/etc/hosts
+    fetch:
+      src: /etc/hosts
+      dest: /opt/data
+
+  - name: Specifying a destination path
+    fetch:
+      src: /tmp/uniquefile
+      dest: /opt/data/special/
+      flat: yes
+      fail_on_missing: no
+
+  # below example, file will be saved as inventory_hostname-fstab under /opt/data
+  - name: Specifying a path directly
+    fetch: 
+      src: /etc/fstab
+      dest: /opt/data/{{ inventory_hostname }}-fstab
+      flat: yes

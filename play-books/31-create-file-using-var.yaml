@@ -1,0 +1,11 @@
+---
+- name: Create a file
+  hosts: localhost
+  vars: 
+    file_name: ansible_file
+
+  tasks:
+  - name: Create a file in /tmp
+    file: 
+      state: touch
+      path: /tmp/{{ file_name }}.txt

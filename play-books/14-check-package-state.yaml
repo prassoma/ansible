@@ -1,0 +1,17 @@
+---
+- name: Check package installation.
+  hosts: all
+
+  tasks:
+  - name: Gather the package facts
+    ansible.builtin.package_facts:
+      manager: auto
+
+#  - name: Print the package facts
+#    ansible.builtin.debug:
+#      var: ansible_facts.packages
+
+  - name: Check whether a package called httpd is installed
+    ansible.builtin.debug:
+      msg: "{{ ansible_facts.packages['vim-enhanced'] | length }} versions of vim-enhanced are installed!"
+    when: "'vim-enhanced' in ansible_facts.packages"

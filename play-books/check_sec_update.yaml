@@ -1,0 +1,13 @@
+---
+- name: Check Security updates only
+  hosts: sgp3vpnlp00001.vpn.cdom
+
+  tasks:
+  - name: list available security patches.
+    shell:
+      cmd: yum updateinfo list sec
+    register: yum_sec_patches
+
+  - name: show that yum output
+    debug:
+      msg: "{{ yum_sec_patches.stdout_lines }}"

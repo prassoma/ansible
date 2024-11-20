@@ -1,0 +1,33 @@
+---
+- name: Disble a cron job
+  hosts: all
+
+  tasks:
+  - name: disable cronjob "Collect LVM data"
+    cron:
+      user: "root"
+      name: "Collect LVM data"
+      state: absent
+  - name: remove cronjob "This Job is managed by ansible"
+    cron:
+      user: "root"
+      name: "This Job is managed by ansible"
+      state: absent
+
+  - name: remove cronjob "This job is scheduled by ansible"
+    cron: 
+      user: "root"
+      name: "This job is scheduled by ansible."
+      state: absent
+
+  - name: remove cronjob "None"
+    cron: 
+      user: "root"
+      name: "None"
+      state: absent
+
+  - name: remove cronjob "Collect LVM data weekly"
+    cron: 
+      user: "root"
+      name: "Collect LVM data weekly"
+      state: absent

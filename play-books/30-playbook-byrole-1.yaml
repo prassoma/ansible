@@ -1,0 +1,10 @@
+---
+- name: Basic install
+  hosts: sgp3vpnlp00001.vpn.cdom
+  roles:
+  - basicinstall
+
+- name: Full install
+  hosts: sgu2psplu00001.psp.cdom
+  roles:
+  - fullinstall
